@@ -1,0 +1,2 @@
+# Tri-Agent System relies entirely on Python Standard Library
+# Zero external packages needed for core logic and serverless execution
