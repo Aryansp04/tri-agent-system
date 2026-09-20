@@ -6,7 +6,7 @@ import sys
 import os
 import json
 from http.server import BaseHTTPRequestHandler
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT_DIR not in sys.path:
@@ -20,15 +20,30 @@ orchestrator = MultiAgentOrchestrator()
 
 
 class handler(BaseHTTPRequestHandler):
-    def _get_path(self):
+    def _get_route(self):
         """
-        Determine actual requested API route across Vercel rewrite headers.
+        Extract the intended API route name from Vercel query parameter, headers, or URL path.
         """
+        parsed = urlparse(self.path)
+        # 1. Check query parameter ?route=... (from vercel.json rewrite)
+        params = parse_qs(parsed.query)
+        if "route" in params and params["route"]:
+            return params["route"][0].strip("/").lower()
+
+        # 2. Check headers
         for h in ("x-forwarded-uri", "x-matched-path", "x-vercel-matched-path", "x-original-uri"):
             val = self.headers.get(h)
             if val:
-                return urlparse(val).path
-        return urlparse(self.path).path
+                p = urlparse(val).path.strip("/").lower()
+                if p.startswith("api/"):
+                    return p[4:]
+                return p
+
+        # 3. Check path directly
+        p = parsed.path.strip("/").lower()
+        if p.startswith("api/"):
+            return p[4:]
+        return p
 
     def _send_json(self, data, status=200):
         body = json.dumps(data).encode("utf-8")
@@ -50,9 +65,9 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        req_path = self._get_path()
+        route = self._get_route()
 
-        if req_path.endswith("/health") or req_path == "/api/health":
+        if route in ("health", "api/health"):
             self._send_json({
                 "status": "healthy",
                 "service": "Tri-Agent System (Vercel Serverless)",
@@ -61,7 +76,7 @@ class handler(BaseHTTPRequestHandler):
             })
             return
 
-        if req_path.endswith("/demo-scenarios") or req_path == "/api/demo-scenarios":
+        if route in ("demo-scenarios", "api/demo-scenarios"):
             scenarios = [
                 {
                     "title": "Pure Coding: Variance Calculation",
@@ -100,14 +115,14 @@ class handler(BaseHTTPRequestHandler):
         # Fallback / diagnostics
         self._send_json({
             "service": "Tri-Agent System (Vercel Serverless)",
-            "detected_path": req_path,
+            "route_detected": route,
             "raw_path": self.path,
             "has_server_key": bool(os.environ.get("GEMINI_API_KEY")),
             "available_endpoints": ["/api/health", "/api/demo-scenarios", "/api/key-test", "/api/chat"]
         })
 
     def do_POST(self):
-        req_path = self._get_path()
+        route = self._get_route()
         content_len = int(self.headers.get("Content-Length", 0))
         body = self.rfile.read(content_len) if content_len > 0 else b"{}"
         try:
@@ -115,7 +130,7 @@ class handler(BaseHTTPRequestHandler):
         except Exception:
             data = {}
 
-        if req_path.endswith("/key-test") or req_path == "/api/key-test":
+        if route in ("key-test", "api/key-test"):
             try:
                 api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip()
                 if not api_key:
@@ -132,7 +147,8 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json({"valid": False, "error": str(e)})
             return
 
-        if req_path.endswith("/chat") or req_path == "/api/chat" or req_path == "/api" or req_path == "/api/index.py":
+        # Default POST route handles chat
+        if route in ("chat", "api/chat", "index.py", ""):
             try:
                 query = data.get("query", "").strip()
                 spoiler_str = data.get("spoiler_preference", "NO_SPOILERS")
@@ -180,4 +196,4 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json({"error": str(e)}, status=500)
             return
 
-        self._send_json({"error": f"Endpoint not found: {req_path}"}, status=404)
+        self._send_json({"error": f"Endpoint not found for route: {route}"}, status=404)
