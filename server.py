@@ -16,16 +16,48 @@ PORT = 8080
 WEB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "web")
 
 
+def load_env():
+    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    if os.path.exists(env_path):
+        try:
+            with open(env_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        k = k.strip()
+                        v = v.strip().strip("'\"")
+                        if k and v and k not in os.environ:
+                            os.environ[k] = v
+        except Exception:
+            pass
+
+load_env()
+
+
 class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
     orchestrator = MultiAgentOrchestrator()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=WEB_DIR, **kwargs)
 
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+        self.send_header("Access-Control-Max-Age", "86400")
+        self.end_headers()
+
     def do_GET(self):
         parsed = urlparse(self.path)
         if parsed.path == "/api/health":
-            self._send_json({"status": "healthy", "service": "Tri-Agent System", "model": "gemini-3.6-flash"})
+            self._send_json({
+                "status": "healthy",
+                "service": "Tri-Agent System",
+                "model": "gemini-3.6-flash",
+                "has_server_key": bool(os.environ.get("GEMINI_API_KEY"))
+            })
         elif parsed.path == "/api/demo-scenarios":
             scenarios = [
                 {
@@ -70,12 +102,12 @@ class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
         # Dedicated endpoint to validate Gemini API key
         if parsed.path == "/api/key-test":
             content_len = int(self.headers.get("Content-Length", 0))
-            body = self.rfile.read(content_len)
+            body = self.rfile.read(content_len) if content_len > 0 else b"{}"
             try:
-                data = json.loads(body.decode("utf-8"))
-                api_key = data.get("api_key", "").strip()
+                data = json.loads(body.decode("utf-8")) if body else {}
+                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip()
                 if not api_key:
-                    self._send_json({"valid": False, "error": "No API key provided."})
+                    self._send_json({"valid": False, "error": "No API key provided or configured."})
                     return
                 from core.llm_client import GeminiClient
                 client = GeminiClient(api_key=api_key)
@@ -90,9 +122,9 @@ class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
 
         if parsed.path == "/api/chat":
             content_len = int(self.headers.get("Content-Length", 0))
-            body = self.rfile.read(content_len)
+            body = self.rfile.read(content_len) if content_len > 0 else b"{}"
             try:
-                data = json.loads(body.decode("utf-8"))
+                data = json.loads(body.decode("utf-8")) if body else {}
                 query = data.get("query", "").strip()
                 spoiler_str = data.get("spoiler_preference", "NO_SPOILERS")
 
@@ -101,8 +133,8 @@ class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
                 except KeyError:
                     spoiler_pref = SpoilerLevel.NO_SPOILERS
 
-                api_key = data.get("api_key", "").strip() or None
-                print(f"[server] api_key received: {'SET (len={})'.format(len(api_key)) if api_key else 'NONE'}")
+                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or None
+                print(f"[server] api_key in use: {'SET (len={})'.format(len(api_key)) if api_key else 'NONE'}")
 
                 if not query:
                     self._send_json({"error": "Empty query provided"}, status=400)
@@ -148,6 +180,8 @@ class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
         self.end_headers()
         self.wfile.write(body)
 

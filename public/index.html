@@ -799,24 +799,25 @@
   <script>
     // ─── KEY MANAGEMENT ────────────────────────────────────────────────────────
     let GEMINI_KEY = sessionStorage.getItem('gemini_api_key') || localStorage.getItem('gemini_api_key') || '';
+    let HAS_SERVER_KEY = false;
 
     function updateKeyStatus(state) {
       const badge = document.getElementById('key-status-badge');
-      if (!GEMINI_KEY) {
-        badge.textContent = 'Simulation Mode';
-        badge.className = 'key-status-tag status-offline';
-      } else if (state === 'validating') {
+      if (state === 'validating') {
         badge.textContent = '⏳ Validating…';
         badge.className = 'key-status-tag status-offline';
-      } else if (state === 'valid') {
+      } else if (state === 'valid' || GEMINI_KEY) {
         badge.textContent = '✓ Gemini Live: Active';
         badge.className = 'key-status-tag status-live';
       } else if (state === 'invalid') {
         badge.textContent = '✗ Invalid Key';
         badge.className = 'key-status-tag status-offline';
-      } else {
-        badge.textContent = '✓ Gemini Live: Active';
+      } else if (HAS_SERVER_KEY) {
+        badge.textContent = '✓ Gemini Live: Active (Server Default)';
         badge.className = 'key-status-tag status-live';
+      } else {
+        badge.textContent = 'Simulation Mode';
+        badge.className = 'key-status-tag status-offline';
       }
     }
 
@@ -866,10 +867,33 @@
 
     // ─── SCENARIOS ─────────────────────────────────────────────────────────────
     async function loadScenarios() {
+      // 1. Check URL parameters for ?key=AQ... (allows one-click links for mobile devices)
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlKey = urlParams.get('key');
+        if (urlKey && urlKey.length >= 10) {
+          GEMINI_KEY = urlKey.trim();
+          sessionStorage.setItem('gemini_api_key', GEMINI_KEY);
+          try { localStorage.setItem('gemini_api_key', GEMINI_KEY); } catch(e) {}
+        }
+      } catch (e) {}
+
       if (GEMINI_KEY) {
         document.getElementById('gemini-key-input').value = GEMINI_KEY;
         updateKeyStatus('valid');
       }
+
+      // 2. Check if server has GEMINI_API_KEY pre-configured
+      try {
+        const healthRes = await fetch('/api/health');
+        const healthData = await healthRes.json();
+        if (healthData && healthData.has_server_key) {
+          HAS_SERVER_KEY = true;
+          if (!GEMINI_KEY) {
+            updateKeyStatus();
+          }
+        }
+      } catch (e) {}
       try {
         const res = await fetch('/api/demo-scenarios');
         const scenarios = await res.json();
