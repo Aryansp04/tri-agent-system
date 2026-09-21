@@ -1,5 +1,6 @@
 """
-Specialized General Knowledge & Open-Ended Inquiry AI Agent.
+OmniAgent: Universal AI Agent for Science, History, and Open-Ended Inquiry.
+Powered directly by Google Gemini with deterministic fallbacks.
 """
 from typing import Dict, Any
 from core.base_agent import BaseAgent
@@ -7,14 +8,14 @@ from core.models import AgentRequest, AgentResponse, DomainType, ToolExecutionRe
 from core.llm_client import GeminiClient
 
 
-class GeneralAgent(BaseAgent):
-    SYSTEM_PROMPT = """You are a helpful, accurate, and articulate general intelligence AI agent.
-Your purpose is to assist the user with open-ended inquiries, science, history, recipes, writing, explanations, and creative problem solving.
+class OmniAgent(BaseAgent):
+    SYSTEM_PROMPT = """You are OmniAgent, a versatile, accurate, and articulate universal AI agent powered by Google Gemini.
+Your purpose is to assist the user with open-ended inquiries, science, history, recipes, writing, research, explanations, and creative problem solving.
 Be concise, clear, and structured in your explanations."""
 
     def __init__(self):
         super().__init__(
-            name="GeneralAgent",
+            name="OmniAgent",
             domain=DomainType.GENERAL,
             system_prompt=self.SYSTEM_PROMPT,
         )
@@ -22,9 +23,9 @@ Be concise, clear, and structured in your explanations."""
 
     def process(self, request: AgentRequest) -> AgentResponse:
         tools_used = []
-        api_key = request.api_key
+        api_key = request.api_key or self.llm_client.api_key
 
-        # Check if Gemini can be called
+        # Call Gemini with user-provided key or default fallback key
         if api_key or self.llm_client.is_configured():
             gen_res = self.llm_client.generate(
                 prompt=request.query,
@@ -40,7 +41,7 @@ Be concise, clear, and structured in your explanations."""
                 ))
             else:
                 content = (
-                    f"### General Knowledge Inquiry\n"
+                    f"### OmniAgent Knowledge Inquiry\n"
                     f"Attempted to process your question via Google Gemini, but encountered an error:\n"
                     f"> `{gen_res.get('error')}`\n\n"
                     f"**Your Query**: {request.query}\n\n"
@@ -53,13 +54,12 @@ Be concise, clear, and structured in your explanations."""
                     error=gen_res.get("error")
                 ))
         else:
-            # Fallback when no Gemini API key is configured
             content = (
-                "### General Knowledge Agent (Key Required for Open-Ended Web Queries)\n"
+                "### OmniAgent (Universal AI)\n"
                 f"You asked: *\"{request.query}\"*\n\n"
                 "This query lies outside our dedicated local offline domains (Coding, Finance, Gaming).\n"
                 "To answer general knowledge, recipes, history, and unrestricted questions, please provide your **Gemini API Key** in the header at the top of the dashboard.\n\n"
-                "Once saved, this agent will immediately synthesize dynamic answers for any subject."
+                "Once saved, OmniAgent will immediately synthesize dynamic answers for any subject."
             )
 
         response = AgentResponse(
@@ -73,3 +73,7 @@ Be concise, clear, and structured in your explanations."""
 
     def quality_check(self, response: AgentResponse) -> bool:
         return True
+
+
+# Backward compatibility alias
+GeneralAgent = OmniAgent

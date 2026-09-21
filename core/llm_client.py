@@ -13,9 +13,12 @@ class GeminiClient:
     DEFAULT_MODEL = "gemini-3.6-flash"
     FALLBACK_MODELS = ["gemini-3.6-flash", "gemini-3.8-flash", "gemini-flash-latest"]
     BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
+    # Default key is loaded at runtime from GEMINI_API_KEY environment variable
+    # (set via .env locally or via Vercel Environment Variables in production)
+    DEFAULT_API_KEY = ""
 
     def __init__(self, api_key: Optional[str] = None, model: str = DEFAULT_MODEL):
-        self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "").strip()
+        self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "").strip() or self.DEFAULT_API_KEY
         self.model = model
 
     def is_configured(self) -> bool:

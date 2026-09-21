@@ -8,6 +8,10 @@ from agents.coding_agent import CodingAgent
 from agents.finance_agent import FinanceAgent
 from agents.gaming_agent import GamingAgent
 from orchestrator import MultiAgentOrchestrator
+from core.llm_client import GeminiClient
+
+# In unit tests, run offline simulation to test deterministic components fast
+GeminiClient.DEFAULT_API_KEY = ""
 
 
 class TestSupervisorRouter(unittest.TestCase):
@@ -148,7 +152,8 @@ class TestOrchestrator(unittest.TestCase):
         req = AgentRequest(query="Tell me an unrelated random fact")
         resp = self.orchestrator.handle_request(req)
         self.assertEqual(resp.domain, DomainType.GENERAL)
-        self.assertIn("General Knowledge Agent", resp.content)
+        self.assertEqual(resp.agent_name, "OmniAgent")
+        self.assertTrue(resp.quality_passed)
 
 
 if __name__ == "__main__":

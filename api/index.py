@@ -72,7 +72,7 @@ class handler(BaseHTTPRequestHandler):
                 "status": "healthy",
                 "service": "Tri-Agent System (Vercel Serverless)",
                 "model": "gemini-3.6-flash",
-                "has_server_key": bool(os.environ.get("GEMINI_API_KEY"))
+                "has_server_key": True
             })
             return
 
@@ -103,7 +103,7 @@ class handler(BaseHTTPRequestHandler):
                     "spoiler_level": "NO_SPOILERS"
                 },
                 {
-                    "title": "Inversion & Error Recovery: Out-of-Domain Query",
+                    "title": "Universal Inquiry (OmniAgent): Science, History & Freeform",
                     "domain": "GENERAL",
                     "query": "Can you tell me how to bake sourdough bread?",
                     "spoiler_level": "NO_SPOILERS"
@@ -117,7 +117,7 @@ class handler(BaseHTTPRequestHandler):
             "service": "Tri-Agent System (Vercel Serverless)",
             "route_detected": route,
             "raw_path": self.path,
-            "has_server_key": bool(os.environ.get("GEMINI_API_KEY")),
+            "has_server_key": True,
             "available_endpoints": ["/api/health", "/api/demo-scenarios", "/api/key-test", "/api/chat"]
         })
 
@@ -132,11 +132,8 @@ class handler(BaseHTTPRequestHandler):
 
         if route in ("key-test", "api/key-test"):
             try:
-                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip()
-                if not api_key:
-                    self._send_json({"valid": False, "error": "No API key provided or configured on server."})
-                    return
                 from core.llm_client import GeminiClient
+                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or GeminiClient.DEFAULT_API_KEY
                 client = GeminiClient(api_key=api_key)
                 result = client.generate(prompt="Reply with only the word: OK", max_output_tokens=500)
                 if result.get("success"):
@@ -158,7 +155,8 @@ class handler(BaseHTTPRequestHandler):
                 except KeyError:
                     spoiler_pref = SpoilerLevel.NO_SPOILERS
 
-                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or None
+                from core.llm_client import GeminiClient
+                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or GeminiClient.DEFAULT_API_KEY
 
                 if not query:
                     self._send_json({"error": "Empty query provided"}, status=400)

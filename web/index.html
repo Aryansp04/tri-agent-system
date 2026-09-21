@@ -703,16 +703,16 @@
         </div>
       </div>
 
-      <!-- General Agent -->
+      <!-- Omni Agent -->
       <div class="agent-card card-general" id="card-general">
         <div class="card-header">
-          <div class="card-title">General Agent</div>
-          <span class="card-badge badge-general">Open Inquiry</span>
+          <div class="card-title">OmniAgent</div>
+          <span class="card-badge badge-general">Universal AI</span>
         </div>
-        <div class="card-desc">Answers any question: recipes, science, history, philosophy, writing, and creative inquiries.</div>
+        <div class="card-desc">Universal intelligence: science, history, philosophy, creative reasoning, and open inquiries.</div>
         <div class="card-tools">
           <span class="tool-chip">gemini_generate</span>
-          <span class="tool-chip">open_reasoning</span>
+          <span class="tool-chip">omni_reasoning</span>
         </div>
       </div>
     </div>
@@ -911,16 +911,16 @@
           container.appendChild(btn);
         });
 
-        // 6th scenario: General Agent inquiry
-        const generalBtn = document.createElement('button');
-        generalBtn.className = 'scenario-btn';
-        generalBtn.innerHTML = '<div class="sc-title">General: How does photosynthesis work?</div><div class="sc-tag">[GENERAL — live key]</div>';
-        generalBtn.onclick = () => {
+        // 6th scenario: OmniAgent inquiry
+        const omniBtn = document.createElement('button');
+        omniBtn.className = 'scenario-btn';
+        omniBtn.innerHTML = '<div class="sc-title">Omni: How does photosynthesis work?</div><div class="sc-tag">[OMNI — live key]</div>';
+        omniBtn.onclick = () => {
           document.getElementById('query-input').value = "Explain the biochemical process of photosynthesis in simple terms.";
           document.getElementById('spoiler-select').value = "NO_SPOILERS";
           submitQuery();
         };
-        container.appendChild(generalBtn);
+        container.appendChild(omniBtn);
       } catch (err) {
         console.error("Could not load scenarios", err);
       }

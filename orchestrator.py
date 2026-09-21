@@ -7,7 +7,7 @@ from agents.router import SupervisorRouter
 from agents.coding_agent import CodingAgent
 from agents.finance_agent import FinanceAgent
 from agents.gaming_agent import GamingAgent
-from agents.general_agent import GeneralAgent
+from agents.general_agent import OmniAgent, GeneralAgent
 
 
 class MultiAgentOrchestrator:
@@ -21,13 +21,13 @@ class MultiAgentOrchestrator:
         self.coding_agent = CodingAgent()
         self.finance_agent = FinanceAgent()
         self.gaming_agent = GamingAgent()
-        self.general_agent = GeneralAgent()
+        self.omni_agent = OmniAgent()
 
         self.agent_map = {
             DomainType.CODING: self.coding_agent,
             DomainType.FINANCE: self.finance_agent,
             DomainType.GAMING: self.gaming_agent,
-            DomainType.GENERAL: self.general_agent,
+            DomainType.GENERAL: self.omni_agent,
         }
 
     def handle_request(self, request: AgentRequest) -> AgentResponse:
@@ -37,7 +37,7 @@ class MultiAgentOrchestrator:
 
         # 2. Open-ended general query handling
         if decision.primary_domain == DomainType.GENERAL:
-            resp = self.general_agent.process(request)
+            resp = self.omni_agent.process(request)
             resp.metadata["route_decision"] = decision
             return resp
 
