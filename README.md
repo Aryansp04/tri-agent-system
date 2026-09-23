@@ -1,6 +1,6 @@
-# 🧠 Multi-Agent Orchestrator System with Live Google Gemini AI
+# 🧠 NexusAI — Multi-Agent Orchestration System
 
-An enterprise-grade, production-ready **Multi-Agent Orchestrator System** written in pure Python (zero mandatory external dependencies) featuring dynamic intent routing, sub-domain specialization, deterministic guardrails, financial math solvers, AST sandboxed execution, and live integration with Google's Gemini models (`gemini-3.6-flash`).
+An enterprise-grade, production-ready **Multi-Agent Orchestration System** written in pure Python (zero mandatory external dependencies) featuring dynamic intent routing, sub-domain specialization, deterministic guardrails, financial math solvers, AST sandboxed execution, and live integration with Google's Gemini models (`gemini-3.6-flash`).
 
 ---
 
@@ -11,9 +11,9 @@ An enterprise-grade, production-ready **Multi-Agent Orchestrator System** writte
   - **Coding Agent**: AST syntax validation, sandboxed Python code execution, automated metric calculation, and quality verification.
   - **Finance Agent**: Deterministic CAGR calculation, Sharpe ratio solver, asset allocation modeling, and risk disclosures.
   - **Gaming Agent**: Boss strategy engine, equipment synergy solver, and strict 3-tier spoiler policy protection (`NO_SPOILERS`, `LIGHT_HINTS`, `FULL_WALKTHROUGH`).
-  - **General Knowledge Agent**: Live open-ended inquiry engine powered directly by Google Gemini (`gemini-3.6-flash` / `gemini-3.8-flash`).
-- **Live Google Gemini Integration**: Built-in direct REST client using standard library `urllib` — zero third-party packages required. Supports all Google AI Studio keys (`AIza...` and modern `AQ...` formats).
-- **Interactive Dark-Mode Web Dashboard**: Glassmorphism UI running locally on port 8080 with live key tester, scenario launcher, and agent trace inspector.
+  - **OmniAgent**: Live open-ended inquiry engine powered directly by Google Gemini (`gemini-3.6-flash` / `gemini-3.8-flash`).
+- **Live Google Gemini Integration**: Built-in direct REST client using standard library `urllib` — zero third-party packages required.
+- **Interactive Dark-Mode Web Dashboard**: Premium glassmorphism UI with animated gradient backgrounds, agent trace inspector, and scenario launcher.
 - **CLI Runner**: Interactive and demo modes for headless and terminal usage.
 - **Test Suite**: 18 comprehensive automated unit tests covering all routing, agents, tools, guardrails, and error recovery paths.
 
@@ -22,7 +22,7 @@ An enterprise-grade, production-ready **Multi-Agent Orchestrator System** writte
 ## 📁 Repository Structure
 
 ```
-tri_agent_system/
+nexusai/
 ├── core/
 │   ├── models.py           # DomainType, SpoilerLevel, RouteDecision, AgentRequest, AgentResponse
 │   ├── base_agent.py       # Abstract BaseAgent with tool registry and quality gates
@@ -32,7 +32,7 @@ tri_agent_system/
 │   ├── coding_agent.py     # Python AST analysis & sandboxed execution
 │   ├── finance_agent.py    # Deterministic financial math & scenario analysis
 │   ├── gaming_agent.py     # Boss strategy engine & spoiler enforcement
-│   └── general_agent.py    # Live open-ended inquiry engine with Gemini
+│   └── general_agent.py    # OmniAgent — live open-ended inquiry engine
 ├── web/
 │   └── index.html          # Interactive responsive web UI & dashboard
 ├── tests/
@@ -72,16 +72,22 @@ python -m unittest discover -s tests
 
 ## 🔑 Activating Google Gemini Live AI
 
-1. Obtain a free API key from [Google AI Studio](https://aistudio.google.com/apikey).
-2. Enter your key in the dashboard header at `http://localhost:8080` and click **Save Key**.
-3. Or set the environment variable:
-   ```bash
-   # Windows PowerShell
-   $env:GEMINI_API_KEY="your-api-key"
-   
-   # Linux / macOS
-   export GEMINI_API_KEY="your-api-key"
-   ```
+Set the `GEMINI_API_KEY` environment variable:
+
+```bash
+# Windows PowerShell
+$env:GEMINI_API_KEY="your-api-key"
+
+# Linux / macOS
+export GEMINI_API_KEY="your-api-key"
+```
+
+Or create a `.env` file in the project root:
+```
+GEMINI_API_KEY=your-api-key
+```
+
+For Vercel deployment, add `GEMINI_API_KEY` as an environment variable in your project settings.
 
 ---
 

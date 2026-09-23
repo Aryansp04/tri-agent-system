@@ -1,5 +1,6 @@
 """
 Central MultiAgentOrchestrator implementing lifecycle, collaboration, and error recovery.
+NexusAI — Supervised Multi-Agent Orchestration System
 """
 from typing import Dict, Any
 from core.models import AgentRequest, AgentResponse, DomainType, RouteDecision, ToolExecutionResult
@@ -7,7 +8,7 @@ from agents.router import SupervisorRouter
 from agents.coding_agent import CodingAgent
 from agents.finance_agent import FinanceAgent
 from agents.gaming_agent import GamingAgent
-from agents.general_agent import OmniAgent, GeneralAgent
+from agents.general_agent import OmniAgent
 
 
 class MultiAgentOrchestrator:
@@ -35,7 +36,7 @@ class MultiAgentOrchestrator:
         # 1. Intent Classification
         decision: RouteDecision = self.router.route(request)
 
-        # 2. Open-ended general query handling
+        # 2. Open-ended general query handling via OmniAgent
         if decision.primary_domain == DomainType.GENERAL:
             resp = self.omni_agent.process(request)
             resp.metadata["route_decision"] = decision
@@ -49,7 +50,7 @@ class MultiAgentOrchestrator:
         agent = self.agent_map.get(decision.primary_domain)
         if not agent:
             return AgentResponse(
-                agent_name="Supervisor",
+                agent_name="NexusAI Supervisor",
                 domain=DomainType.GENERAL,
                 content=f"Error: No registered agent for domain {decision.primary_domain.value}.",
                 quality_passed=False
@@ -104,15 +105,16 @@ class MultiAgentOrchestrator:
 
     def _handle_unclassified(self, request: AgentRequest, decision: RouteDecision) -> AgentResponse:
         return AgentResponse(
-            agent_name="SupervisorRouter",
+            agent_name="NexusAI Router",
             domain=DomainType.GENERAL,
             content=(
-                "### General Router Fallback\n"
-                f"Your query could not be definitively routed to one of our three specialized domains:\n"
-                "- **Coding Agent**: Architecture, debugging, software implementation, testing.\n"
-                "- **Finance Agent**: Sourced investment analysis, CAGR, Sharpe ratio, scenario modeling.\n"
-                "- **Gaming Agent**: Boss strategies, build synergies, item comparisons, spoiler protection.\n\n"
-                "Please clarify your request or specify which domain you need assistance with."
+                "### NexusAI — Query Not Classified\n"
+                f"Your query could not be definitively routed to one of our specialized domains:\n"
+                "- **Coding Agent**: Architecture, debugging, software implementation, algorithms, testing.\n"
+                "- **Finance Agent**: Investment analysis, CAGR, Sharpe ratio, portfolio scenario modeling.\n"
+                "- **Gaming Agent**: Boss strategies, build synergies, item comparisons, spoiler protection.\n"
+                "- **OmniAgent**: Science, history, philosophy, creative reasoning, and open inquiries.\n\n"
+                "Please rephrase your query with more context."
             ),
             metadata={"route_decision": decision},
             quality_passed=True

@@ -1,5 +1,5 @@
 """
-Entry point and demonstration runner for the Tri-Agent System.
+Entry point and demonstration runner for NexusAI.
 """
 import argparse
 import sys
@@ -9,7 +9,7 @@ from orchestrator import MultiAgentOrchestrator
 
 def print_banner():
     print("=" * 75)
-    print("      TRI-AGENT SYSTEM PROTOTYPE: CODING | FINANCE | GAMING")
+    print("              NEXUSAI: CODING | FINANCE | GAMING | OMNI")
     print("=" * 75)
 
 
@@ -90,7 +90,7 @@ def run_interactive():
             if not query:
                 continue
             if query.lower() in ["exit", "quit", "q"]:
-                print("Exiting Tri-Agent System.")
+                print("Exiting NexusAI.")
                 break
 
             spoiler_input = input("Spoiler Level ([1] NO_SPOILERS, [2] LIMITED, [3] FULL) [Default: 1]: ").strip()
@@ -110,7 +110,7 @@ def run_interactive():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Tri-Agent System Prototype")
+    parser = argparse.ArgumentParser(description="NexusAI Multi-Agent System")
     parser.add_argument("--demo", action="store_true", help="Run automated demonstration scenarios")
     args = parser.parse_args()
 

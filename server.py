@@ -1,5 +1,5 @@
 """
-Local HTTP Server serving the Tri-Agent Interactive Web Dashboard and REST API.
+Local HTTP Server serving the NexusAI Interactive Web Dashboard and REST API.
 Runs with zero external dependencies using Python standard library.
 """
 import http.server
@@ -35,7 +35,7 @@ def load_env():
 load_env()
 
 
-class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
+class NexusAIHandler(http.server.SimpleHTTPRequestHandler):
     orchestrator = MultiAgentOrchestrator()
 
     def __init__(self, *args, **kwargs):
@@ -54,7 +54,7 @@ class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
         if parsed.path == "/api/health":
             self._send_json({
                 "status": "healthy",
-                "service": "Tri-Agent System",
+                "service": "NexusAI",
                 "model": "gemini-3.6-flash",
                 "has_server_key": True
             })
@@ -85,7 +85,7 @@ class TriAgentHandler(http.server.SimpleHTTPRequestHandler):
                     "spoiler_level": "NO_SPOILERS"
                 },
                 {
-                    "title": "Universal Inquiry (OmniAgent): Science, History & Freeform",
+                    "title": "OmniAgent: Science, History & Freeform",
                     "domain": "GENERAL",
                     "query": "Can you tell me how to bake sourdough bread?",
                     "spoiler_level": "NO_SPOILERS"
@@ -190,9 +190,9 @@ def run_server(port: int = PORT):
     
     # Allow address reuse
     socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.ThreadingTCPServer(server_address, TriAgentHandler) as httpd:
+    with socketserver.ThreadingTCPServer(server_address, NexusAIHandler) as httpd:
         print(f"============================================================")
-        print(f" Tri-Agent Web Dashboard running at: http://127.0.0.1:{port}")
+        print(f" NexusAI Dashboard running at: http://127.0.0.1:{port}")
         print(f" Web UI: Open http://localhost:{port} in your browser")
         print(f" Press Ctrl+C to stop the server.")
         print(f"============================================================")

@@ -1,5 +1,5 @@
 """
-Vercel Serverless Function entry point for Tri-Agent System.
+Vercel Serverless Function entry point for NexusAI.
 Runs with pure Python standard library on Vercel's Serverless Python runtime.
 """
 import sys
@@ -70,7 +70,7 @@ class handler(BaseHTTPRequestHandler):
         if route in ("health", "api/health"):
             self._send_json({
                 "status": "healthy",
-                "service": "Tri-Agent System (Vercel Serverless)",
+                "service": "NexusAI (Vercel Serverless)",
                 "model": "gemini-3.6-flash",
                 "has_server_key": True
             })
@@ -103,7 +103,7 @@ class handler(BaseHTTPRequestHandler):
                     "spoiler_level": "NO_SPOILERS"
                 },
                 {
-                    "title": "Universal Inquiry (OmniAgent): Science, History & Freeform",
+                    "title": "OmniAgent: Science, History & Freeform",
                     "domain": "GENERAL",
                     "query": "Can you tell me how to bake sourdough bread?",
                     "spoiler_level": "NO_SPOILERS"
@@ -114,7 +114,7 @@ class handler(BaseHTTPRequestHandler):
 
         # Fallback / diagnostics
         self._send_json({
-            "service": "Tri-Agent System (Vercel Serverless)",
+            "service": "NexusAI (Vercel Serverless)",
             "route_detected": route,
             "raw_path": self.path,
             "has_server_key": True,

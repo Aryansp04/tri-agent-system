@@ -3,68 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tri-Agent AI System | Coding • Finance • Gaming • General</title>
-  <meta name="description" content="Autonomous multi-agent orchestration architecture specialized in software engineering, investment research, gaming, and general inquiry with live Gemini integration.">
+  <title>NexusAI | Multi-Agent Orchestration System</title>
+  <meta name="description" content="NexusAI — Autonomous multi-agent orchestration system specializing in software engineering, investment research, gaming strategy, and universal AI inquiry powered by Google Gemini.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #090c15;
-      --bg-card: rgba(16, 22, 38, 0.7);
-      --bg-card-hover: rgba(22, 31, 54, 0.85);
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-glow: rgba(99, 102, 241, 0.3);
-      
-      --accent-router: #818cf8;
-      --accent-coding: #38bdf8;
-      --accent-finance: #34d399;
+      --bg-dark: #06080f;
+      --bg-surface: rgba(12, 17, 30, 0.85);
+      --bg-elevated: rgba(18, 25, 45, 0.9);
+      --bg-hover: rgba(26, 36, 62, 0.9);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-focus: rgba(139, 92, 246, 0.5);
+
+      --accent-primary: #8b5cf6;
+      --accent-coding: #06b6d4;
+      --accent-finance: #10b981;
       --accent-gaming: #f43f5e;
-      --accent-general: #fbbf24;
-      --accent-hybrid: #e879f9;
-      
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      
-      --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      --accent-omni: #f59e0b;
+      --accent-hybrid: #d946ef;
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-tertiary: #64748b;
+
+      --glow-primary: 0 0 30px rgba(139, 92, 246, 0.15);
+      --radius-xl: 20px;
       --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15), transparent 40%),
-                  radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.12), transparent 40%),
-                  radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.08), transparent 50%),
-                  var(--bg-dark);
-      background-attachment: fixed;
-      color: var(--text-main);
-      font-family: 'Outfit', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
       line-height: 1.6;
-      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    /* ═══ ANIMATED BACKGROUND ═══ */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(139, 92, 246, 0.12), transparent),
+        radial-gradient(ellipse 60% 50% at 85% 75%, rgba(6, 182, 212, 0.08), transparent),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(244, 63, 94, 0.06), transparent);
+      animation: meshShift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes meshShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(25deg); }
     }
 
     .container {
-      max-width: 1360px;
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 20px 24px 40px;
     }
 
-    /* HEADER */
+    /* ═══ HEADER ═══ */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 20px;
+      padding: 16px 0 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
       flex-wrap: wrap;
       gap: 16px;
     }
@@ -72,294 +86,245 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
-    .brand-logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #6366f1, #f43f5e);
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #8b5cf6, #06b6d4);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 20px;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+      font-weight: 900;
+      font-size: 22px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+      position: relative;
+      overflow: hidden;
     }
 
-    .brand-title h1 {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(to right, #ffffff, #cbd5e1);
+    .brand-icon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2));
+    }
+
+    .brand-info h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      background: linear-gradient(135deg, #f1f5f9 30%, #8b5cf6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .brand-title p {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .system-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 16px;
-      border-radius: 9999px;
-      background: rgba(52, 211, 153, 0.1);
-      border: 1px solid rgba(52, 211, 153, 0.25);
-      color: var(--accent-finance);
-      font-size: 13px;
+    .brand-info p {
+      font-size: 12.5px;
+      color: var(--text-tertiary);
       font-weight: 500;
+      letter-spacing: 0.3px;
     }
 
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent-finance);
-      box-shadow: 0 0 10px var(--accent-finance);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(0.95); opacity: 0.8; }
-      50% { transform: scale(1.3); opacity: 1; }
-      100% { transform: scale(0.95); opacity: 0.8; }
-    }
-
-    /* API KEY CONTROL BAR */
-    .api-key-bar {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 12px 18px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .key-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .key-status-tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .status-live {
-      background: rgba(52, 211, 153, 0.15);
-      color: var(--accent-finance);
-      border: 1px solid rgba(52, 211, 153, 0.3);
-    }
-
-    .status-offline {
-      background: rgba(251, 191, 36, 0.15);
-      color: var(--accent-general);
-      border: 1px solid rgba(251, 191, 36, 0.3);
-    }
-
-    .key-input-wrap {
+    .status-pill {
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .key-input {
-      background: rgba(10, 14, 26, 0.8);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 6px 12px;
-      color: var(--text-main);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      width: 260px;
-      outline: none;
-    }
-
-    .key-input:focus {
-      border-color: var(--accent-router);
-    }
-
-    .btn-key-save {
-      background: rgba(99, 102, 241, 0.2);
-      border: 1px solid rgba(99, 102, 241, 0.4);
-      color: #cbd5e1;
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
-      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      font-size: 12.5px;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
+      color: var(--accent-finance);
     }
 
-    .btn-key-save:hover {
-      background: rgba(99, 102, 241, 0.4);
-      color: white;
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-finance);
+      box-shadow: 0 0 8px var(--accent-finance);
+      animation: statusPulse 2s ease-in-out infinite;
     }
 
-    /* ARCHITECTURE CARDS GRID */
-    .agent-grid {
+    @keyframes statusPulse {
+      0%, 100% { opacity: 0.7; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    /* ═══ AGENT CARDS ═══ */
+    .agents-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
       margin-bottom: 28px;
     }
 
     .agent-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 16px;
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
       position: relative;
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: default;
     }
 
     .agent-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 3px;
+      opacity: 0.8;
     }
 
-    .card-coding::before { background: linear-gradient(90deg, #38bdf8, #818cf8); }
-    .card-finance::before { background: linear-gradient(90deg, #34d399, #10b981); }
-    .card-gaming::before { background: linear-gradient(90deg, #f43f5e, #fb7185); }
-    .card-general::before { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
-    .card-router::before { background: linear-gradient(90deg, #a855f7, #6366f1); }
+    .agent-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      opacity: 0;
+      transition: opacity 0.35s;
+      pointer-events: none;
+    }
 
     .agent-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.18);
-      box-shadow: var(--shadow-glass);
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
     }
+
+    .agent-card:hover::after { opacity: 1; }
+
+    .card-router::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .card-router::after { background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.06), transparent 70%); }
+    .card-coding::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+    .card-coding::after { background: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.06), transparent 70%); }
+    .card-finance::before { background: linear-gradient(90deg, #10b981, #34d399); }
+    .card-finance::after { background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.06), transparent 70%); }
+    .card-gaming::before { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+    .card-gaming::after { background: radial-gradient(circle at 50% 0%, rgba(244, 63, 94, 0.06), transparent 70%); }
+    .card-omni::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .card-omni::after { background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.06), transparent 70%); }
 
     .agent-card.active-agent {
-      border-color: var(--border-glow);
-      box-shadow: 0 0 24px rgba(99, 102, 241, 0.35);
+      border-color: var(--border-focus);
+      box-shadow: var(--glow-primary), 0 0 0 1px rgba(139, 92, 246, 0.15);
     }
 
-    .card-header {
+    .ac-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .ac-name {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .ac-badge {
+      font-size: 9.5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .badge-router { background: rgba(139, 92, 246, 0.12); color: var(--accent-primary); }
+    .badge-coding { background: rgba(6, 182, 212, 0.12); color: var(--accent-coding); }
+    .badge-finance { background: rgba(16, 185, 129, 0.12); color: var(--accent-finance); }
+    .badge-gaming { background: rgba(244, 63, 94, 0.12); color: var(--accent-gaming); }
+    .badge-omni { background: rgba(245, 158, 11, 0.12); color: var(--accent-omni); }
+
+    .ac-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
       margin-bottom: 10px;
     }
 
-    .card-title {
-      font-size: 15px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .card-badge {
-      font-size: 10px;
-      padding: 2px 7px;
-      border-radius: 5px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .badge-coding { background: rgba(56, 189, 248, 0.15); color: var(--accent-coding); }
-    .badge-finance { background: rgba(52, 211, 153, 0.15); color: var(--accent-finance); }
-    .badge-gaming { background: rgba(244, 63, 94, 0.15); color: var(--accent-gaming); }
-    .badge-general { background: rgba(251, 191, 36, 0.15); color: var(--accent-general); }
-    .badge-router { background: rgba(129, 140, 248, 0.15); color: var(--accent-router); }
-
-    .card-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-
-    .card-tools {
+    .ac-tools {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
     }
 
-    .tool-chip {
+    .tool-tag {
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
-      padding: 2px 6px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2px 7px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 4px;
-      color: #cbd5e1;
+      color: var(--text-tertiary);
     }
 
-    /* MAIN INTERACTION LAYOUT */
-    .interaction-layout {
+    /* ═══ MAIN LAYOUT ═══ */
+    .workspace {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 300px 1fr;
       gap: 24px;
     }
 
     @media (max-width: 960px) {
-      .interaction-layout {
-        grid-template-columns: 1fr;
-      }
+      .workspace { grid-template-columns: 1fr; }
     }
 
-    /* DEMO SCENARIOS SIDEBAR */
-    .sidebar-panel {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 18px;
+    /* ═══ SIDEBAR ═══ */
+    .sidebar {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .panel-title {
-      font-size: 14px;
+    .sidebar-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .sidebar-title {
+      font-size: 13px;
       font-weight: 700;
-      color: var(--text-main);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 4px;
+      margin-bottom: 14px;
+      letter-spacing: -0.2px;
     }
 
     .scenario-btn {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-subtle);
+      width: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 10px 12px;
+      padding: 12px 14px;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
-      color: var(--text-main);
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      color: var(--text-primary);
       font-family: inherit;
+      margin-bottom: 8px;
     }
 
+    .scenario-btn:last-child { margin-bottom: 0; }
+
     .scenario-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateX(3px);
+      background: rgba(139, 92, 246, 0.06);
+      border-color: rgba(139, 92, 246, 0.2);
+      transform: translateX(4px);
     }
 
     .scenario-btn .sc-title {
@@ -371,529 +336,477 @@
     .scenario-btn .sc-tag {
       font-size: 10px;
       font-family: 'JetBrains Mono', monospace;
-      color: var(--text-dim);
+      color: var(--text-tertiary);
     }
 
-    /* CHAT & EXECUTION MAIN AREA */
+    /* ═══ MAIN PANEL ═══ */
     .main-panel {
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
 
-    .input-box-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 20px;
+    .input-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 22px;
     }
 
-    .input-controls {
+    .input-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      font-size: 13px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
       gap: 10px;
     }
 
-    .spoiler-select-wrap {
+    .input-label {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .spoiler-wrap {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--text-muted);
+      font-size: 12px;
+      color: var(--text-secondary);
     }
 
     select.spoiler-select {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
       padding: 6px 12px;
       border-radius: var(--radius-sm);
       font-family: inherit;
       font-size: 12px;
       outline: none;
       cursor: pointer;
+      transition: border-color 0.2s;
     }
+
+    select.spoiler-select:focus { border-color: var(--border-focus); }
 
     textarea.query-input {
       width: 100%;
-      height: 95px;
-      background: rgba(10, 14, 26, 0.8);
-      border: 1px solid var(--border-subtle);
+      height: 100px;
+      background: rgba(6, 8, 15, 0.6);
+      border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 14px;
-      color: var(--text-main);
+      padding: 14px 16px;
+      color: var(--text-primary);
       font-family: inherit;
       font-size: 14px;
       resize: vertical;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     textarea.query-input:focus {
-      border-color: var(--accent-router);
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.08);
     }
 
-    .btn-row {
+    textarea.query-input::placeholder { color: var(--text-tertiary); }
+
+    .action-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 12px;
+      margin-top: 14px;
       flex-wrap: wrap;
       gap: 10px;
     }
 
-    .quick-hint {
+    .hint-text {
       font-size: 12px;
-      color: var(--text-dim);
+      color: var(--text-tertiary);
     }
 
     .send-btn {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
       border: none;
       color: white;
-      padding: 10px 24px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: 14px;
+      padding: 11px 28px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 13.5px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
-      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      letter-spacing: 0.2px;
     }
 
     .send-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+      box-shadow: 0 8px 28px rgba(139, 92, 246, 0.5);
     }
 
     .send-btn:disabled {
-      opacity: 0.5;
+      opacity: 0.45;
       cursor: not-allowed;
       transform: none;
+      box-shadow: none;
     }
 
-    /* RESPONSE CARD */
-    .response-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 24px;
+    /* ═══ LOADING ═══ */
+    .loading-state {
       display: none;
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-secondary);
+    }
+
+    .loader {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.06);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 18px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* ═══ RESPONSE ═══ */
+    .response-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      display: none;
+      animation: fadeSlideIn 0.4s ease;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .trace-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
-      padding-bottom: 16px;
-      margin-bottom: 18px;
-      border-bottom: 1px solid var(--border-subtle);
-      font-size: 13px;
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .trace-item {
+    .trace-chip {
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 4px 10px;
-      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 5px 12px;
+      border-radius: 8px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
+      border: 1px solid var(--border);
     }
 
-    .tools-log-tray {
-      background: rgba(10, 14, 26, 0.6);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 12px;
+    .trace-chip strong { color: var(--accent-primary); }
+
+    .tools-tray {
+      background: rgba(6, 8, 15, 0.5);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
       margin-bottom: 20px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
     }
 
-    .tools-log-title {
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+    .tools-tray-title {
+      font-weight: 700;
+      color: var(--text-secondary);
       text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 0.5px;
+      font-size: 10.5px;
+      letter-spacing: 0.8px;
+      margin-bottom: 10px;
     }
 
-    .tool-execution-entry {
+    .tool-entry {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 4px 0;
-      color: #94a3b8;
+      gap: 8px;
+      padding: 3px 0;
+      color: var(--text-secondary);
     }
 
-    .tool-status-pass { color: var(--accent-finance); }
+    .tool-pass { color: var(--accent-finance); }
+    .tool-fail { color: var(--accent-gaming); }
 
-    .markdown-output {
+    /* ═══ MARKDOWN OUTPUT ═══ */
+    .md-output {
       font-size: 14.5px;
       color: #e2e8f0;
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
-    .markdown-output h1,
-    .markdown-output h2,
-    .markdown-output h3 {
-      color: #f8fafc;
+    .md-output h1, .md-output h2, .md-output h3 {
+      color: var(--text-primary);
       margin-top: 20px;
       margin-bottom: 10px;
       font-weight: 700;
     }
 
-    .markdown-output h3 { font-size: 16px; }
+    .md-output h3 { font-size: 16px; }
 
-    .markdown-output pre {
-      background: #060913;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .md-output pre {
+      background: rgba(6, 8, 15, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-sm);
-      padding: 14px;
+      padding: 16px;
       overflow-x: auto;
-      margin: 14px 0;
+      margin: 16px 0;
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
-      color: #38bdf8;
+      color: var(--accent-coding);
     }
 
-    .markdown-output table {
+    .md-output table {
       width: 100%;
       border-collapse: collapse;
       margin: 16px 0;
       font-size: 13.5px;
     }
 
-    .markdown-output th,
-    .markdown-output td {
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .md-output th, .md-output td {
+      border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 8px 12px;
       text-align: left;
     }
 
-    .markdown-output th {
-      background: rgba(255, 255, 255, 0.05);
-      color: #f8fafc;
+    .md-output th {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
     }
 
     .alert-box {
-      background: rgba(99, 102, 241, 0.1);
-      border-left: 4px solid var(--accent-router);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin: 14px 0;
+      background: rgba(139, 92, 246, 0.08);
+      border-left: 4px solid var(--accent-primary);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 16px 0;
       font-size: 13.5px;
     }
 
-    .loading-state {
-      display: none;
+    /* ═══ FOOTER ═══ */
+    .footer {
       text-align: center;
-      padding: 40px;
-      color: var(--text-muted);
-      font-size: 15px;
+      padding: 32px 0 8px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
     }
 
-    .spinner {
-      width: 36px;
-      height: 36px;
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-top-color: var(--accent-router);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 16px;
+    .footer a {
+      color: var(--accent-primary);
+      text-decoration: none;
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
+  <div class="bg-mesh"></div>
 
   <div class="container">
-    <!-- HEADER -->
+    <!-- ═══ HEADER ═══ -->
     <header>
       <div class="brand">
-        <div class="brand-logo">Δ</div>
-        <div class="brand-title">
-          <h1>Tri-Agent System</h1>
-          <p>Supervised Multi-Agent Orchestration • Coding | Finance | Gaming | General</p>
+        <div class="brand-icon">N</div>
+        <div class="brand-info">
+          <h1>NexusAI</h1>
+          <p>Multi-Agent Orchestration • Coding · Finance · Gaming · Omni</p>
         </div>
       </div>
-      <div class="system-status">
-        <div class="pulse-dot"></div>
-        <span>Orchestrator Online (HTTP :8080)</span>
+      <div class="status-pill">
+        <div class="status-dot"></div>
+        <span id="status-text">System Online</span>
       </div>
     </header>
 
-    <!-- GEMINI API KEY BAR -->
-    <div class="api-key-bar">
-      <div class="key-info">
-        <span style="font-weight: 600;">Google Gemini LLM Engine:</span>
-        <span id="key-status-badge" class="key-status-tag status-offline">Simulation Mode</span>
-        <span style="color:var(--text-dim); font-size:12px;">(Get key at <a href="https://aistudio.google.com" target="_blank" style="color:var(--accent-coding); text-decoration:none;">aistudio.google.com</a>)</span>
-      </div>
-      <div class="key-input-wrap">
-        <input type="password" id="gemini-key-input" class="key-input" placeholder="Paste Gemini API Key (AIza... or AQ...)">
-        <button class="btn-key-save" onclick="saveApiKey()">Save Key</button>
-        <button class="btn-key-save" style="background:rgba(244,63,94,0.15); border-color:rgba(244,63,94,0.3);" onclick="clearApiKey()">Clear</button>
-      </div>
-    </div>
-
-    <!-- ARCHITECTURE CARDS -->
-    <div class="agent-grid">
-      <!-- Supervisor Router -->
+    <!-- ═══ AGENT CARDS ═══ -->
+    <div class="agents-row">
       <div class="agent-card card-router" id="card-router">
-        <div class="card-header">
-          <div class="card-title">Supervisor Router</div>
-          <span class="card-badge badge-router">Orchestrator</span>
+        <div class="ac-header">
+          <span class="ac-name">Supervisor Router</span>
+          <span class="ac-badge badge-router">Core</span>
         </div>
-        <div class="card-desc">Evaluates intent, confidence scoring, hybrid requests, and general knowledge routing.</div>
-        <div class="card-tools">
-          <span class="tool-chip">Regex Booster</span>
-          <span class="tool-chip">Hybrid Detector</span>
+        <div class="ac-desc">Intent classification, confidence scoring, hybrid decomposition & cross-domain routing.</div>
+        <div class="ac-tools">
+          <span class="tool-tag">regex_boost</span>
+          <span class="tool-tag">hybrid_detect</span>
         </div>
       </div>
 
-      <!-- Coding Agent -->
       <div class="agent-card card-coding" id="card-coding">
-        <div class="card-header">
-          <div class="card-title">Coding Agent</div>
-          <span class="card-badge badge-coding">Dev & Testing</span>
+        <div class="ac-header">
+          <span class="ac-name">Coding Agent</span>
+          <span class="ac-badge badge-coding">Dev</span>
         </div>
-        <div class="card-desc">Dynamic code generation via Gemini, AST syntax validation, and sandbox execution.</div>
-        <div class="card-tools">
-          <span class="tool-chip">check_syntax</span>
-          <span class="tool-chip">execute_sandbox</span>
+        <div class="ac-desc">AST syntax validation, sandboxed execution, dynamic Gemini code generation.</div>
+        <div class="ac-tools">
+          <span class="tool-tag">check_syntax</span>
+          <span class="tool-tag">execute_sandbox</span>
         </div>
       </div>
 
-      <!-- Finance Agent -->
       <div class="agent-card card-finance" id="card-finance">
-        <div class="card-header">
-          <div class="card-title">Finance Agent</div>
-          <span class="card-badge badge-finance">Quant & Research</span>
+        <div class="ac-header">
+          <span class="ac-name">Finance Agent</span>
+          <span class="ac-badge badge-finance">Quant</span>
         </div>
-        <div class="card-desc">Financial statements, CAGR/Sharpe formulas, scenario analysis, and risk disclosures.</div>
-        <div class="card-tools">
-          <span class="tool-chip">calculate_cagr</span>
-          <span class="tool-chip">run_scenarios</span>
+        <div class="ac-desc">CAGR, Sharpe ratio, scenario modeling, risk disclosures & portfolio analysis.</div>
+        <div class="ac-tools">
+          <span class="tool-tag">calculate_cagr</span>
+          <span class="tool-tag">run_scenarios</span>
         </div>
       </div>
 
-      <!-- Gaming Agent -->
       <div class="agent-card card-gaming" id="card-gaming">
-        <div class="card-header">
-          <div class="card-title">Gaming Agent</div>
-          <span class="card-badge badge-gaming">Tactics & Builds</span>
+        <div class="ac-header">
+          <span class="ac-name">Gaming Agent</span>
+          <span class="ac-badge badge-gaming">Tactics</span>
         </div>
-        <div class="card-desc">Boss telegraph counters, build synergies, item comparisons, and 3-tier spoiler enforcement.</div>
-        <div class="card-tools">
-          <span class="tool-chip">query_boss</span>
-          <span class="tool-chip">spoiler_gate</span>
+        <div class="ac-desc">Boss strategy engine, build synergy solver, 3-tier spoiler gate enforcement.</div>
+        <div class="ac-tools">
+          <span class="tool-tag">query_boss</span>
+          <span class="tool-tag">spoiler_gate</span>
         </div>
       </div>
 
-      <!-- Omni Agent -->
-      <div class="agent-card card-general" id="card-general">
-        <div class="card-header">
-          <div class="card-title">OmniAgent</div>
-          <span class="card-badge badge-general">Universal AI</span>
+      <div class="agent-card card-omni" id="card-general">
+        <div class="ac-header">
+          <span class="ac-name">OmniAgent</span>
+          <span class="ac-badge badge-omni">Universal</span>
         </div>
-        <div class="card-desc">Universal intelligence: science, history, philosophy, creative reasoning, and open inquiries.</div>
-        <div class="card-tools">
-          <span class="tool-chip">gemini_generate</span>
-          <span class="tool-chip">omni_reasoning</span>
+        <div class="ac-desc">Open-ended AI: science, history, philosophy, creative reasoning & free inquiry.</div>
+        <div class="ac-tools">
+          <span class="tool-tag">gemini_generate</span>
+          <span class="tool-tag">omni_reason</span>
         </div>
       </div>
     </div>
 
-    <!-- WORKSPACE INTERACTION -->
-    <div class="interaction-layout">
-      <!-- SIDEBAR: SCENARIOS -->
-      <div class="sidebar-panel">
-        <div class="panel-title">
-          <span>⚡ One-Click Scenarios</span>
-        </div>
-        <div id="scenarios-container">
-          <!-- Populated by JavaScript -->
+    <!-- ═══ WORKSPACE ═══ -->
+    <div class="workspace">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-title">⚡ Quick Scenarios</div>
+          <div id="scenarios-container">
+            <!-- Populated by JavaScript -->
+          </div>
         </div>
       </div>
 
-      <!-- MAIN PANEL -->
+      <!-- MAIN -->
       <div class="main-panel">
-        <!-- INPUT AREA -->
-        <div class="input-box-card">
-          <div class="input-controls">
-            <span style="font-weight:600;">Dispatch Query to System</span>
-            <div class="spoiler-select-wrap">
-              <label for="spoiler-select">Spoiler Protection:</label>
+        <div class="input-card">
+          <div class="input-header">
+            <span class="input-label">Dispatch Query</span>
+            <div class="spoiler-wrap">
+              <label for="spoiler-select">Spoiler Level:</label>
               <select id="spoiler-select" class="spoiler-select">
-                <option value="NO_SPOILERS">NO_SPOILERS (Default)</option>
-                <option value="LIMITED_SPOILERS">LIMITED_SPOILERS</option>
-                <option value="FULL_SPOILERS">FULL_SPOILERS</option>
+                <option value="NO_SPOILERS">No Spoilers</option>
+                <option value="LIMITED_SPOILERS">Limited</option>
+                <option value="FULL_SPOILERS">Full</option>
               </select>
             </div>
           </div>
 
-          <textarea id="query-input" class="query-input" placeholder="Ask anything! Coding, Finance, Gaming, or any General Knowledge question..."></textarea>
+          <textarea id="query-input" class="query-input" placeholder="Ask anything — code, finance, gaming strategies, or open-ended questions..."></textarea>
 
-          <div class="btn-row">
-            <span class="quick-hint">💡 Can answer open-ended questions when Gemini API Key is saved.</span>
+          <div class="action-row">
+            <span class="hint-text">NexusAI routes your query to the best agent automatically.</span>
             <button id="send-btn" class="send-btn" onclick="submitQuery()">
-              <span>Execute Request</span>
+              <span>Execute</span>
               <span>→</span>
             </button>
           </div>
         </div>
 
-        <!-- LOADING INDICATOR -->
+        <!-- LOADING -->
         <div id="loading" class="loading-state">
-          <div class="spinner"></div>
-          <div>SupervisorRouter decomposing query and routing to specialized agents...</div>
+          <div class="loader"></div>
+          <div class="loading-text">NexusAI routing query to specialized agents...</div>
         </div>
 
-        <!-- RESPONSE CARD -->
+        <!-- RESPONSE -->
         <div id="response-card" class="response-card">
           <div class="trace-bar">
-            <div class="trace-item">
+            <div class="trace-chip">
               <span>Agent:</span>
-              <strong id="res-agent" style="color:var(--accent-router);">CodingAgent</strong>
+              <strong id="res-agent">—</strong>
             </div>
-            <div class="trace-item">
+            <div class="trace-chip">
               <span>Domain:</span>
-              <strong id="res-domain">CODING</strong>
+              <strong id="res-domain">—</strong>
             </div>
-            <div class="trace-item">
+            <div class="trace-chip">
               <span>Confidence:</span>
-              <strong id="res-confidence">95%</strong>
+              <strong id="res-confidence">—</strong>
             </div>
-            <div class="trace-item">
-              <span>Quality Gate:</span>
-              <strong id="res-quality" style="color:var(--accent-finance);">PASSED</strong>
+            <div class="trace-chip">
+              <span>Quality:</span>
+              <strong id="res-quality" style="color:var(--accent-finance);">—</strong>
             </div>
           </div>
 
-          <!-- TOOLS FIRED TRAY -->
-          <div id="tools-tray" class="tools-log-tray">
-            <div class="tools-log-title">Authorized Tools Executed:</div>
+          <div id="tools-tray" class="tools-tray">
+            <div class="tools-tray-title">Tools Executed</div>
             <div id="tools-list"></div>
           </div>
 
-          <!-- FORMATTED MARKDOWN OUTPUT -->
-          <div id="markdown-output" class="markdown-output"></div>
+          <div id="markdown-output" class="md-output"></div>
         </div>
       </div>
+    </div>
+
+    <div class="footer">
+      NexusAI — Multi-Agent Orchestration System · Powered by <a href="https://ai.google.dev" target="_blank">Google Gemini</a>
     </div>
   </div>
 
   <script>
-    // ─── KEY MANAGEMENT ────────────────────────────────────────────────────────
-    let GEMINI_KEY = sessionStorage.getItem('gemini_api_key') || localStorage.getItem('gemini_api_key') || '';
-    let HAS_SERVER_KEY = false;
+    // ─── HIDDEN API KEY (server-side only) ─────────────────────────────────
+    // The API key is managed entirely server-side via GEMINI_API_KEY env var.
+    // No key input is exposed to the user. The system works out of the box.
 
-    function updateKeyStatus(state) {
-      const badge = document.getElementById('key-status-badge');
-      if (state === 'validating') {
-        badge.textContent = '⏳ Validating…';
-        badge.className = 'key-status-tag status-offline';
-      } else if (state === 'valid' || GEMINI_KEY) {
-        badge.textContent = '✓ Gemini Live: Active';
-        badge.className = 'key-status-tag status-live';
-      } else if (state === 'invalid') {
-        badge.textContent = '✗ Invalid Key';
-        badge.className = 'key-status-tag status-offline';
-      } else if (HAS_SERVER_KEY) {
-        badge.textContent = '✓ Gemini Live: Active (Server Default)';
-        badge.className = 'key-status-tag status-live';
-      } else {
-        badge.textContent = 'Simulation Mode';
-        badge.className = 'key-status-tag status-offline';
-      }
-    }
-
-    async function saveApiKey() {
-      const input = document.getElementById('gemini-key-input');
-      const key = input.value.trim();
-      if (!key || key.length < 10) {
-        alert("Please paste a valid Gemini API key.");
-        return;
-      }
-
-      GEMINI_KEY = key;
-      sessionStorage.setItem('gemini_api_key', key);
-      try { localStorage.setItem('gemini_api_key', key); } catch(e) {}
-      updateKeyStatus('validating');
-
-      try {
-        const res = await fetch('/api/key-test', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ api_key: key })
-        });
-        const data = await res.json();
-        if (data.valid) {
-          updateKeyStatus('valid');
-          alert('Gemini API Key validated successfully!\nModel: ' + (data.model || 'gemini-3.6-flash') + '\n\nAll agents now use live Gemini AI.');
-        } else {
-          updateKeyStatus('invalid');
-          GEMINI_KEY = '';
-          sessionStorage.removeItem('gemini_api_key');
-          try { localStorage.removeItem('gemini_api_key'); } catch(e) {}
-          alert('Key rejected by Gemini:\n' + data.error + '\n\nGet a fresh key from https://aistudio.google.com/apikey');
-        }
-      } catch (e) {
-        updateKeyStatus('invalid');
-        alert('Network error: ' + e.message);
-      }
-    }
-
-    function clearApiKey() {
-      GEMINI_KEY = '';
-      sessionStorage.removeItem('gemini_api_key');
-      try { localStorage.removeItem('gemini_api_key'); } catch(e) {}
-      document.getElementById('gemini-key-input').value = '';
-      updateKeyStatus();
-    }
-
-    // ─── SCENARIOS ─────────────────────────────────────────────────────────────
-    async function loadScenarios() {
-      // 1. Check URL parameters for ?key=AQ... (allows one-click links for mobile devices)
-      try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlKey = urlParams.get('key');
-        if (urlKey && urlKey.length >= 10) {
-          GEMINI_KEY = urlKey.trim();
-          sessionStorage.setItem('gemini_api_key', GEMINI_KEY);
-          try { localStorage.setItem('gemini_api_key', GEMINI_KEY); } catch(e) {}
-        }
-      } catch (e) {}
-
-      if (GEMINI_KEY) {
-        document.getElementById('gemini-key-input').value = GEMINI_KEY;
-        updateKeyStatus('valid');
-      }
-
-      // 2. Check if server has GEMINI_API_KEY pre-configured
+    // ─── INIT ──────────────────────────────────────────────────────────────
+    async function init() {
+      // Check server health & update status
       try {
         const healthRes = await fetch('/api/health');
         const healthData = await healthRes.json();
-        if (healthData && healthData.has_server_key) {
-          HAS_SERVER_KEY = true;
-          if (!GEMINI_KEY) {
-            updateKeyStatus();
-          }
+        const statusEl = document.getElementById('status-text');
+        if (healthData && healthData.status === 'healthy') {
+          statusEl.textContent = 'System Online';
+        } else {
+          statusEl.textContent = 'Connecting...';
         }
-      } catch (e) {}
+      } catch (e) {
+        document.getElementById('status-text').textContent = 'Offline';
+      }
+
+      // Load scenarios
       try {
         const res = await fetch('/api/demo-scenarios');
         const scenarios = await res.json();
@@ -902,7 +815,7 @@
         scenarios.forEach(sc => {
           const btn = document.createElement('button');
           btn.className = 'scenario-btn';
-          btn.innerHTML = '<div class="sc-title">' + sc.title + '</div><div class="sc-tag">[' + sc.domain + ']</div>';
+          btn.innerHTML = '<div class="sc-title">' + escHtml(sc.title) + '</div><div class="sc-tag">[' + escHtml(sc.domain) + ']</div>';
           btn.onclick = () => {
             document.getElementById('query-input').value = sc.query;
             document.getElementById('spoiler-select').value = sc.spoiler_level;
@@ -910,23 +823,18 @@
           };
           container.appendChild(btn);
         });
-
-        // 6th scenario: OmniAgent inquiry
-        const omniBtn = document.createElement('button');
-        omniBtn.className = 'scenario-btn';
-        omniBtn.innerHTML = '<div class="sc-title">Omni: How does photosynthesis work?</div><div class="sc-tag">[OMNI — live key]</div>';
-        omniBtn.onclick = () => {
-          document.getElementById('query-input').value = "Explain the biochemical process of photosynthesis in simple terms.";
-          document.getElementById('spoiler-select').value = "NO_SPOILERS";
-          submitQuery();
-        };
-        container.appendChild(omniBtn);
       } catch (err) {
         console.error("Could not load scenarios", err);
       }
     }
 
-    // ─── SUBMIT QUERY ──────────────────────────────────────────────────────────
+    function escHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    // ─── SUBMIT ────────────────────────────────────────────────────────────
     async function submitQuery() {
       const query = document.getElementById('query-input').value.trim();
       const spoiler = document.getElementById('spoiler-select').value;
@@ -945,30 +853,33 @@
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: query, spoiler_preference: spoiler, api_key: GEMINI_KEY || '' })
+          body: JSON.stringify({ query: query, spoiler_preference: spoiler })
         });
         const data = await res.json();
         renderResponse(data);
       } catch (err) {
-        alert("Failed to reach agent backend: " + err.message);
+        alert("Failed to reach NexusAI backend: " + err.message);
       } finally {
         sendBtn.disabled = false;
         loading.style.display = 'none';
       }
     }
 
-    // ─── RENDER RESPONSE ───────────────────────────────────────────────────────
+    // ─── RENDER ────────────────────────────────────────────────────────────
     function renderResponse(data) {
       const responseCard = document.getElementById('response-card');
       responseCard.style.display = 'block';
       document.getElementById('res-agent').textContent = data.agent_name;
       document.getElementById('res-domain').textContent = data.domain;
+
       const conf = data.route_decision ? Math.round(data.route_decision.confidence * 100) + '%' : '100%';
       document.getElementById('res-confidence').textContent = conf;
+
       const qualityEl = document.getElementById('res-quality');
       qualityEl.textContent = data.quality_passed ? 'PASSED' : 'FAILED';
       qualityEl.style.color = data.quality_passed ? 'var(--accent-finance)' : 'var(--accent-gaming)';
 
+      // Highlight active agent card
       if (data.domain === 'CODING') document.getElementById('card-coding').classList.add('active-agent');
       else if (data.domain === 'FINANCE') document.getElementById('card-finance').classList.add('active-agent');
       else if (data.domain === 'GAMING') document.getElementById('card-gaming').classList.add('active-agent');
@@ -978,25 +889,27 @@
         document.getElementById('card-finance').classList.add('active-agent');
       }
 
+      // Tools
       const toolsList = document.getElementById('tools-list');
       toolsList.innerHTML = '';
       if (data.tools_used && data.tools_used.length > 0) {
         data.tools_used.forEach(t => {
           const div = document.createElement('div');
-          div.className = 'tool-execution-entry';
-          const color = t.success ? 'var(--accent-finance)' : 'var(--accent-gaming)';
-          div.innerHTML = '<span style="color:' + color + '">' + (t.success ? '✔' : '✘') + '</span> <strong>' + t.tool_name + '</strong> <span style="color:#64748b;">(' + (t.success ? 'OK' : (t.error || 'Failed')) + ')</span>';
+          div.className = 'tool-entry';
+          const cls = t.success ? 'tool-pass' : 'tool-fail';
+          div.innerHTML = '<span class="' + cls + '">' + (t.success ? '✔' : '✘') + '</span> <strong>' + escHtml(t.tool_name) + '</strong> <span style="color:var(--text-tertiary);">(' + (t.success ? 'OK' : (escHtml(t.error || 'Failed'))) + ')</span>';
           toolsList.appendChild(div);
         });
         document.getElementById('tools-tray').style.display = 'block';
       } else {
         document.getElementById('tools-tray').style.display = 'none';
       }
-      document.getElementById('markdown-output').innerHTML = parseSimpleMarkdown(data.content);
+
+      document.getElementById('markdown-output').innerHTML = parseMarkdown(data.content);
     }
 
-    // ─── MARKDOWN PARSER ───────────────────────────────────────────────────────
-    function parseSimpleMarkdown(md) {
+    // ─── MARKDOWN ──────────────────────────────────────────────────────────
+    function parseMarkdown(md) {
       if (!md) return '';
       return md
         .replace(/```python([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
@@ -1011,7 +924,16 @@
         .replace(/\n\n/g, '<br><br>');
     }
 
-    window.addEventListener('DOMContentLoaded', loadScenarios);
+    // Allow Enter (without Shift) to submit
+    document.addEventListener('DOMContentLoaded', () => {
+      init();
+      document.getElementById('query-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          submitQuery();
+        }
+      });
+    });
   </script>
 </body>
 </html>
