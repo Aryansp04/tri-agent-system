@@ -10,8 +10,8 @@ import urllib.error
 
 
 class GeminiClient:
-    DEFAULT_MODEL = "gemini-2.5-flash"
-    FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro", "gemini-flash-latest"]
+    DEFAULT_MODEL = "gemini-1.5-flash"
+    FALLBACK_MODELS = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-flash-latest", "gemini-2.5-flash", "gemini-1.5-pro"]
     BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
     # Default key is loaded at runtime from GEMINI_API_KEY environment variable
     # (set via .env locally or via Vercel Environment Variables in production)
@@ -89,7 +89,8 @@ class GeminiClient:
                                 "text": text,
                                 "model": model_candidate
                             }
-                    return {"success": False, "error": "Empty or unexpected response format from Gemini API."}
+                    # If candidates empty, try next model candidate
+                    continue
             except urllib.error.HTTPError as e:
                 err_msg = e.read().decode("utf-8")
                 try:
@@ -98,11 +99,10 @@ class GeminiClient:
                 except Exception:
                     detail = err_msg
                 last_error = f"Gemini API HTTP {e.code}: {detail}"
-                if e.code == 404:
-                    # Model not found or deprecated for this key; try next candidate
-                    continue
-                return {"success": False, "error": last_error}
+                # If 404 (not found), 503 (high demand), 429 (rate limit), or server error, try next candidate model
+                continue
             except Exception as e:
-                return {"success": False, "error": f"Connection error calling Gemini API: {str(e)}"}
+                last_error = f"Connection error calling Gemini API: {str(e)}"
+                continue
 
         return {"success": False, "error": last_error}
