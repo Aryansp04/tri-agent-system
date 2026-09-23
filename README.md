@@ -1,6 +1,6 @@
 # 🧠 NexusAI — Multi-Agent Orchestration System
 
-An enterprise-grade, production-ready **Multi-Agent Orchestration System** written in pure Python (zero mandatory external dependencies) featuring dynamic intent routing, sub-domain specialization, deterministic guardrails, financial math solvers, AST sandboxed execution, and live integration with Google's Gemini models (`gemini-3.6-flash`).
+An enterprise-grade, production-ready **Multi-Agent Orchestration System** written in pure Python (zero mandatory external dependencies) featuring dynamic intent routing, sub-domain specialization, deterministic guardrails, financial math solvers, AST sandboxed execution, and live integration with Google's Gemini models (`gemini-2.5-flash`).
 
 ---
 
@@ -11,7 +11,7 @@ An enterprise-grade, production-ready **Multi-Agent Orchestration System** writt
   - **Coding Agent**: AST syntax validation, sandboxed Python code execution, automated metric calculation, and quality verification.
   - **Finance Agent**: Deterministic CAGR calculation, Sharpe ratio solver, asset allocation modeling, and risk disclosures.
   - **Gaming Agent**: Boss strategy engine, equipment synergy solver, and strict 3-tier spoiler policy protection (`NO_SPOILERS`, `LIGHT_HINTS`, `FULL_WALKTHROUGH`).
-  - **OmniAgent**: Live open-ended inquiry engine powered directly by Google Gemini (`gemini-3.6-flash` / `gemini-3.8-flash`).
+  - **OmniAgent**: Live open-ended inquiry engine powered directly by Google Gemini (`gemini-2.5-flash` / `gemini-3.8-flash`).
 - **Live Google Gemini Integration**: Built-in direct REST client using standard library `urllib` — zero third-party packages required.
 - **Interactive Dark-Mode Web Dashboard**: Premium glassmorphism UI with animated gradient backgrounds, agent trace inspector, and scenario launcher.
 - **CLI Runner**: Interactive and demo modes for headless and terminal usage.

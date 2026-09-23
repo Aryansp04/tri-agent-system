@@ -37,7 +37,7 @@ Be concise, clear, and structured in your explanations."""
                 tools_used.append(ToolExecutionResult(
                     tool_name="gemini_generate",
                     success=True,
-                    output={"model": gen_res.get("model", "gemini-3.6-flash")}
+                    output={"model": gen_res.get("model", "gemini-2.5-flash")}
                 ))
             else:
                 content = (

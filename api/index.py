@@ -71,8 +71,8 @@ class handler(BaseHTTPRequestHandler):
             self._send_json({
                 "status": "healthy",
                 "service": "NexusAI (Vercel Serverless)",
-                "model": "gemini-3.6-flash",
-                "has_server_key": True
+                "model": "gemini-2.5-flash",
+                "has_server_key": bool(os.environ.get("GEMINI_API_KEY", "").strip())
             })
             return
 
@@ -133,7 +133,8 @@ class handler(BaseHTTPRequestHandler):
         if route in ("key-test", "api/key-test"):
             try:
                 from core.llm_client import GeminiClient
-                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or GeminiClient.DEFAULT_API_KEY
+                raw_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or GeminiClient.DEFAULT_API_KEY
+                api_key = raw_key.strip().strip('"').strip("'")
                 client = GeminiClient(api_key=api_key)
                 result = client.generate(prompt="Reply with only the word: OK", max_output_tokens=500)
                 if result.get("success"):
@@ -156,7 +157,8 @@ class handler(BaseHTTPRequestHandler):
                     spoiler_pref = SpoilerLevel.NO_SPOILERS
 
                 from core.llm_client import GeminiClient
-                api_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or GeminiClient.DEFAULT_API_KEY
+                raw_key = data.get("api_key", "").strip() or os.environ.get("GEMINI_API_KEY", "").strip() or GeminiClient.DEFAULT_API_KEY
+                api_key = raw_key.strip().strip('"').strip("'")
 
                 if not query:
                     self._send_json({"error": "Empty query provided"}, status=400)

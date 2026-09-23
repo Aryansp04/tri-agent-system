@@ -55,7 +55,7 @@ class NexusAIHandler(http.server.SimpleHTTPRequestHandler):
             self._send_json({
                 "status": "healthy",
                 "service": "NexusAI",
-                "model": "gemini-3.6-flash",
+                "model": "gemini-2.5-flash",
                 "has_server_key": True
             })
         elif parsed.path == "/api/demo-scenarios":
